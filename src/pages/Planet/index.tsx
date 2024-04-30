@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Button, Image, Text, View } from 'react-native';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 
 import { getById } from '../../services/planet.service';
@@ -12,11 +12,19 @@ export default function PlanetPage() {
     const navigation = useNavigation<NavigationProp<any>>();
     const [planet, setPlanet] = React.useState<Planet>();
 
+    navigation.setOptions({
+        headerRight: () => <Button title="Moons" onPress={goToMoonPage} />
+    });
+
+    function goToMoonPage() {
+        navigation.navigate('Moon', { planet });
+    }
+
     async function fetchPlanet() {
         const { id } = route.params as any;
         const result = await getById(id);
         setPlanet(result);
-        navigation.setOptions({ title: `Moons of ${result?.name}` });
+        navigation.setOptions({ title: result?.name });
     }
 
     React.useEffect(() => {

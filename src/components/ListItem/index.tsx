@@ -4,8 +4,8 @@ import styles from './styles';
 
 type Props = {
     title: string;
-    subTitle: string;
-    onPress: () => void;
+    subTitle?: string;
+    onPress?: () => void;
 };
 
 export default function ListItem({ title, subTitle, onPress }: Props) {
